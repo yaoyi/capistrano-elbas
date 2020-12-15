@@ -6,6 +6,9 @@ def autoscale(groupname, properties = {})
   include Capistrano::DSL
   include Elbas::Logger
 
+  roles = ENV['ROLES'].to_s.split(',')
+  return if roles.any? && (roles & properties[:roles]).empty?
+
   set :aws_autoscale_group_names, Array(fetch(:aws_autoscale_group_names)).push(groupname)
 
   asg = Elbas::AWS::AutoscaleGroup.new groupname
