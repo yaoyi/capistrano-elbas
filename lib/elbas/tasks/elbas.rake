@@ -15,6 +15,7 @@ namespace :elbas do
     fetch(:aws_autoscale_group_names).each do |aws_autoscale_group_name|
       info "Auto Scaling Group: #{aws_autoscale_group_name}"
       asg = Elbas::AWS::AutoscaleGroup.new aws_autoscale_group_name
+      next if asg.instances.running.empty?
 
       info "Creating AMI from a running instance..."
       ami = Elbas::AWS::AMI.create asg.instances.running.sample
