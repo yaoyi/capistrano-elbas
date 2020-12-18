@@ -26,6 +26,7 @@ module Elbas
         end
 
         def query_instances_by_ids(ids)
+          return [] if ids.empty?
           aws_client
             .describe_instances(instance_ids: @ids)
             .reservations.flat_map(&:instances)
