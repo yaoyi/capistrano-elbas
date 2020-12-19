@@ -6,6 +6,8 @@ def autoscale(groupname, properties = {})
   include Capistrano::DSL
   include Elbas::Logger
 
+  filters = env.instance_variable_get('@cmdline_filters')
+  return unless filters.nil?
   roles = ENV['ROLES'].to_s.split(',')
   return if roles.any? && (roles & properties[:roles]).empty?
 
