@@ -12,6 +12,13 @@ module Elbas
         aws_counterpart.instances.map(&:instance_id)
       end
 
+      def instances_protected_from_scale_in
+        instance_ids = aws_counterpart.instances.
+          select(&:protected_from_scale_in).
+          map(&:instance_id)
+        InstanceCollection.new instance_ids
+      end
+
       def instances
         InstanceCollection.new instance_ids
       end
