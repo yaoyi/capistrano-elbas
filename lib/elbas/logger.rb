@@ -10,6 +10,10 @@ module Elbas
       $stdout.puts [prefix, message, "\n"].join
     end
 
+    def warn(message)
+      $stdout.puts [warn_prefix, message, "\n"].join
+    end
+
     def error(message)
       $stderr.puts [error_prefix, message, "\n"].join
     end
@@ -19,12 +23,20 @@ module Elbas
         @prefix ||= cyan(PREFIX_TEXT)
       end
 
+      def warn_prefix
+        @warn_prefix ||= magenta(PREFIX_TEXT)
+      end
+
       def error_prefix
         @error_prefix ||= red(PREFIX_TEXT)
       end
 
       def cyan(text)
         color_text text, :cyan
+      end
+
+      def magenta(text)
+        color_text text, :magenta
       end
 
       def red(text)
